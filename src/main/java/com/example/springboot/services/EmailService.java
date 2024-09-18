@@ -83,7 +83,7 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
-            helper.setFrom("isabela.leite@senaisp.edu.br"); //remetente
+            helper.setFrom("bela.mmor@gmail.com"); //remetente
             helper.setTo(to); //destinatário
             helper.setSubject(subject); //assunto
             helper.setText(htmlContent, true);  // 'true' indica que o conteúdo é HTML, mensagem
@@ -121,22 +121,22 @@ public class EmailService {
             menusByRestaurante.forEach((restaurantName, restaurantMenus) -> {
                 if (restaurantName.equalsIgnoreCase("Moda da Casa")){
                     html.append("<p><strong style='color: #007bc0;'>").append(restaurantName).append("</strong>: <br>");
-                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getSaguao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
+                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getGuarnicao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
                     html.setLength(html.length() - 2);
                     html.append("</p>");
                 }else if(restaurantName.equalsIgnoreCase("De Bem com a Vida")){
                     html.append("<p><strong style='color: #00884a;'>").append(restaurantName).append("</strong>: <br>");
-                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getSaguao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
+                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getGuarnicao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
                     html.setLength(html.length() - 2);
                     html.append("</p>");
                 }else if(restaurantName.equalsIgnoreCase("Receita do Chefe")){
                     html.append("<p><strong style='color: #18837e;'>").append(restaurantName).append("</strong>: <br>");
-                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getSaguao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
+                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getGuarnicao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
                     html.setLength(html.length() - 2);
                     html.append("</p>");
                 }else if(restaurantName.equalsIgnoreCase("Grill e Bem-Estar")){
                     html.append("<p><strong style='color: #9e2896;'>").append(restaurantName).append("</strong>: <br>");
-                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getSaguao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
+                    restaurantMenus.forEach(menu -> html.append("<span style='color: #34495E;'>").append(menu.getPrato_principal()).append("<br>").append(menu.getGuarnicao()).append("<br>").append(menu.getSalada()).append("<br>").append(menu.getSobremesa()).append("</span>, "));
                     html.setLength(html.length() - 2);
                     html.append("</p>");
                 }

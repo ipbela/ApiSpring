@@ -161,7 +161,7 @@ public class ChatbotServices {
                     foundTodayMenu = true;
                     //adiciona na variável as informações de cada coluna do banco referente ao cardápio
                     menuString.append("Prato Principal: ").append(item.getPrato_principal())
-                            .append(", Saguão: ").append(item.getSaguao())
+                            .append(", Saguão: ").append(item.getGuarnicao())
                             .append(", Sobremesa: ").append(item.getSobremesa())
                             .append(", Salada: ").append(item.getSalada()).append("\n");
                 }

@@ -12,12 +12,11 @@ import java.util.UUID;
 @Table(name = "cardapio")
 public class CardapioModel implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id_cardapio;
     private String prato_principal;
-    private String saguao;
+    private String guarnicao;
     private String sobremesa;
     private String salada;
     private LocalDate data;
@@ -43,12 +42,12 @@ public class CardapioModel implements Serializable {
         this.prato_principal = prato_principal;
     }
 
-    public String getSaguao() {
-        return saguao;
+    public String getGuarnicao() {
+        return guarnicao;
     }
 
-    public void setSaguao(String saguao) {
-        this.saguao = saguao;
+    public void setGuarnicao(String guarnicao) {
+        this.guarnicao = guarnicao;
     }
 
     public String getSobremesa() {
