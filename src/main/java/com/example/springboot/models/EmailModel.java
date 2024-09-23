@@ -16,7 +16,6 @@ public class EmailModel implements Serializable {
     private String nome;
     private String email;
 
-    private boolean ativo;
 
     public UUID getId_email() {
         return id_email;
@@ -42,11 +41,4 @@ public class EmailModel implements Serializable {
         this.email = email;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
 }

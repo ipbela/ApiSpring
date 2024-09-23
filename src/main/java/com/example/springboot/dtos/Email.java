@@ -1,4 +1,6 @@
 package com.example.springboot.dtos;
 
-public record Email (String to, String subject, String body){
+import jakarta.validation.constraints.NotNull;
+
+public record Email (@NotNull String nome, @NotNull String email){
 }

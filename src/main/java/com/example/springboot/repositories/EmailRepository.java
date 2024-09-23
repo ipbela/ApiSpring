@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface EmailRepository extends JpaRepository<EmailModel, UUID> {
-    List<EmailModel> findByAtivoTrue(); //busca os emails que estão ativos
+
 }

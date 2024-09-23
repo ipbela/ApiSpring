@@ -37,7 +37,7 @@ public class EmailService {
     //Método para envio de emails
     public void sendEmailsToAllActive() {
         //acha no banco os emails que estão ativos e guarda em uma variável
-        List<EmailModel> activeEmails = emailRepository.findByAtivoTrue();
+        List<EmailModel> activeEmails = emailRepository.findAll();
 
         //se a variável for diferente de vazia entra nessa condição
         if (activeEmails != null && !activeEmails.isEmpty()) {
@@ -83,7 +83,7 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
-            helper.setFrom("bela.mmor@gmail.com"); //remetente
+            helper.setFrom("isabela.leite@senaisp.edu.br"); //remetente
             helper.setTo(to); //destinatário
             helper.setSubject(subject); //assunto
             helper.setText(htmlContent, true);  // 'true' indica que o conteúdo é HTML, mensagem
