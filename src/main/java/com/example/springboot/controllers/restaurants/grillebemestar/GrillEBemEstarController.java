@@ -38,6 +38,12 @@ public class GrillEBemEstarController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado. Verifique o ID fornecido.");
         }
 
+        // Verifica se já existe um cardápio cadastrado para o mesmo restaurante e data
+        Optional<CardapioModel> existingMenu = cardapioRepository.findByRestauranteModelAndData(restauranteOpt.get(), cardapioRecordDto.data());
+        if (existingMenu.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cardápio cadastrado com essa data para o restaurante 'Grill e Bem-Estar'.");
+        }
+
         var cardapioModel = new CardapioModel();
         // Faz a cópia de propriedades de DTO para Model
         BeanUtils.copyProperties(cardapioRecordDto, cardapioModel);

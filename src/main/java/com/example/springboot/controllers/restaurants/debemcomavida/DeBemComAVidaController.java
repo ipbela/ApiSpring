@@ -8,11 +8,13 @@ import com.example.springboot.repositories.RestauranteRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +31,7 @@ public class DeBemComAVidaController {
 
     // Método POST que salva um novo cardápio
     @PostMapping("/cardapios")
-    public ResponseEntity<Object> saveMenu(@RequestBody @Valid CardapioRecordDto cardapioRecordDto) {
+    public ResponseEntity<Object> saveMenu(@RequestBody @Valid @DateTimeFormat(pattern = "dd/MM/yyyy") CardapioRecordDto cardapioRecordDto) {
         // Busca o restaurante pelo ID fornecido no DTO
         Optional<RestauranteModel> restauranteOpt = restauranteRepository.findById(cardapioRecordDto.fk_restaurante());
 
@@ -38,7 +40,14 @@ public class DeBemComAVidaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado. Verifique o ID fornecido.");
         }
 
+        // Verifica se já existe um cardápio cadastrado para o mesmo restaurante e data
+        Optional<CardapioModel> existingMenu = cardapioRepository.findByRestauranteModelAndData(restauranteOpt.get(), cardapioRecordDto.data());
+        if (existingMenu.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cardápio cadastrado com essa data para o restaurante 'De Bem com a Vida'.");
+        }
+
         var cardapioModel = new CardapioModel();
+
         // Faz a cópia de propriedades de DTO para Model
         BeanUtils.copyProperties(cardapioRecordDto, cardapioModel);
 

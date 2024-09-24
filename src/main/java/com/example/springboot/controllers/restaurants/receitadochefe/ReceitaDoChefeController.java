@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,12 @@ public class ReceitaDoChefeController {
         // Se o restaurante não for encontrado, retorna BAD_REQUEST com uma mensagem clara
         if (restauranteOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado. Verifique o ID fornecido.");
+        }
+
+        // Verifica se já existe um cardápio cadastrado para o mesmo restaurante e data
+        Optional<CardapioModel> existingMenu = cardapioRepository.findByRestauranteModelAndData(restauranteOpt.get(), cardapioRecordDto.data());
+        if (existingMenu.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cardápio cadastrado com essa data para o restaurante 'Receita do Chefe'.");
         }
 
         var cardapioModel = new CardapioModel();

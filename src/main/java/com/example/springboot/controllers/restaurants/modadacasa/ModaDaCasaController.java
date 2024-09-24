@@ -38,6 +38,12 @@ public class ModaDaCasaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado. Verifique o ID fornecido.");
         }
 
+        // Verifica se já existe um cardápio cadastrado para o mesmo restaurante e data
+        Optional<CardapioModel> existingMenu = cardapioRepository.findByRestauranteModelAndData(restauranteOpt.get(), cardapioRecordDto.data());
+        if (existingMenu.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Já existe um cardápio cadastrado com essa data para o restaurante 'Moda da Casa'.");
+        }
+
         var cardapioModel = new CardapioModel();
         // Faz a cópia de propriedades de DTO para Model
         BeanUtils.copyProperties(cardapioRecordDto, cardapioModel);
@@ -48,6 +54,7 @@ public class ModaDaCasaController {
         // Salva o cardápio no repositório e retorna as informações no corpo da resposta
         return ResponseEntity.status(HttpStatus.CREATED).body(cardapioRepository.save(cardapioModel));
     }
+
 
     // Método GET para buscar todos os cardápios do restaurante "Moda da Casa" dentro da semana atual
     @GetMapping("/cardapios")
