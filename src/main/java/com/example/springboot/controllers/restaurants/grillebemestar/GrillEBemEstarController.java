@@ -55,25 +55,30 @@ public class GrillEBemEstarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cardapioRepository.save(cardapioModel));
     }
 
-    // Método GET para buscar todos os cardápios do restaurante "Moda da Casa" dentro da semana atual
+    // Método GET para buscar todos os cardápios do restaurante "Grill e Bem-Estar" dentro da semana atual
     @GetMapping("/cardapios")
-    public ResponseEntity<Object> getAllMenusForModaDaCasaThisWeek() {
-        // Busca o restaurante "Moda da Casa" pelo nome
+    public ResponseEntity<Object> getAllMenusThisWeek() {
+        // Busca o restaurante "Grill e Bem-Estar" pelo nome
         RestauranteModel restauranteOpt = restauranteRepository.findByNome("Grill e Bem-Estar");
 
-        if (restauranteOpt.equals("")) {
+        if (restauranteOpt == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Restaurante 'Grill e Bem-Estar' não encontrado.");
         }
 
         RestauranteModel restaurante = restauranteOpt;
 
-        // Define o intervalo de 7 dias a partir da data atual
+        // Pega a data de hoje
         LocalDate today = LocalDate.now();
-        LocalDate endOfWeek = today.plusDays(6);
 
-        // Busca cardápios apenas para o restaurante "Moda da Casa" e filtra pelo intervalo de datas
+        // Calcula a segunda-feira da semana atual
+        LocalDate mondayOfThisWeek = today.with(java.time.DayOfWeek.MONDAY);
+
+        // Calcula o domingo da semana atual (6 dias após a segunda-feira)
+        LocalDate sundayOfThisWeek = mondayOfThisWeek.plusDays(6);
+
+        // Busca cardápios apenas para o restaurante "De Bem com a Vida" e filtra pelo intervalo de datas (segunda a domingo)
         List<CardapioModel> menus = cardapioRepository.findByRestauranteModel(restaurante).stream()
-                .filter(menu -> !menu.getData().isBefore(today) && !menu.getData().isAfter(endOfWeek))
+                .filter(menu -> !menu.getData().isBefore(mondayOfThisWeek) && !menu.getData().isAfter(sundayOfThisWeek))
                 .toList();
 
         if (menus.isEmpty()) {

@@ -58,23 +58,28 @@ public class ModaDaCasaController {
 
     // Método GET para buscar todos os cardápios do restaurante "Moda da Casa" dentro da semana atual
     @GetMapping("/cardapios")
-    public ResponseEntity<Object> getAllMenusForModaDaCasaThisWeek() {
+    public ResponseEntity<Object> getAllMenusThisWeek() {
         // Busca o restaurante "Moda da Casa" pelo nome
         RestauranteModel restauranteOpt = restauranteRepository.findByNome("Moda da Casa");
 
-        if (restauranteOpt.equals("")) {
+        if (restauranteOpt == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Restaurante 'Moda da Casa' não encontrado.");
         }
 
         RestauranteModel restaurante = restauranteOpt;
 
-        // Define o intervalo de 7 dias a partir da data atual
+        // Pega a data de hoje
         LocalDate today = LocalDate.now();
-        LocalDate endOfWeek = today.plusDays(6);
 
-        // Busca cardápios apenas para o restaurante "Moda da Casa" e filtra pelo intervalo de datas
+        // Calcula a segunda-feira da semana atual
+        LocalDate mondayOfThisWeek = today.with(java.time.DayOfWeek.MONDAY);
+
+        // Calcula o domingo da semana atual (6 dias após a segunda-feira)
+        LocalDate sundayOfThisWeek = mondayOfThisWeek.plusDays(6);
+
+        // Busca cardápios apenas para o restaurante "De Bem com a Vida" e filtra pelo intervalo de datas (segunda a domingo)
         List<CardapioModel> menus = cardapioRepository.findByRestauranteModel(restaurante).stream()
-                .filter(menu -> !menu.getData().isBefore(today) && !menu.getData().isAfter(endOfWeek))
+                .filter(menu -> !menu.getData().isBefore(mondayOfThisWeek) && !menu.getData().isAfter(sundayOfThisWeek))
                 .toList();
 
         if (menus.isEmpty()) {
