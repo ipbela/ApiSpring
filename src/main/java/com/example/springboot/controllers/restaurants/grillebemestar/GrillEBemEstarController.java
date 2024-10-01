@@ -31,8 +31,6 @@ public class GrillEBemEstarController {
     @Autowired
     RestauranteRepository restauranteRepository;
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
     // Método POST que salva um novo cardápio
     @PostMapping("/cardapios")
     public ResponseEntity<Object> saveMenu(@RequestBody @Valid CardapioRecordDto cardapioRecordDto) {
@@ -133,10 +131,9 @@ public class GrillEBemEstarController {
     // Método para verificar se a data está dentro desta semana
     private boolean isDateWithinThisWeek(String dateStr, LocalDate mondayOfThisWeek, LocalDate sundayOfThisWeek) {
         try {
-            LocalDate date = LocalDate.parse(dateStr, DATE_FORMATTER);
+            LocalDate date = LocalDate.parse(dateStr);
             return !date.isBefore(mondayOfThisWeek) && !date.isAfter(sundayOfThisWeek);
         } catch (Exception e) {
-            // Lida com a exceção caso a string não possa ser convertida para LocalDate
             return false;
         }
     }
