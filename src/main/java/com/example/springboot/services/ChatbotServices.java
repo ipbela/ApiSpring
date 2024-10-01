@@ -226,7 +226,7 @@ public class ChatbotServices {
             String moveLine = "";
 
             //pega o último registro do banco
-            MonitoramentoModel latestEntry = monitoringLine.getLast();
+            MonitoramentoModel latestEntry = monitoringLine.get(0);
 
             //pega a data registrada no banco do último registro
             LocalDate itemDate = LocalDate.parse(latestEntry.getDataRegistro().toString());

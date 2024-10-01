@@ -19,17 +19,19 @@ public class AvaliacaoChatModel implements Serializable {
     @Enumerated(EnumType.STRING)
     private Avaliacao avaliacao;
 
-    private LocalDate data;
+    private String data;
 
     public AvaliacaoChatModel() {
-        this.data = LocalDate.now();  // Inicializando a data com a data atual
+        data = LocalDate.now().toString();
+        this.data = data;  // Inicializando a data com a data atual
     }
 
     // Construtor que utiliza string para inicializar o enum
     public AvaliacaoChatModel(UUID id_avaliacao_chat, String avaliacao) {
         this.id_avaliacao_chat = id_avaliacao_chat;
         this.avaliacao = Avaliacao.fromLabel(avaliacao);
-        this.data = LocalDate.now();
+        data = LocalDate.now().toString();
+        this.data = data;  // Inicializando a data com a data atual
     }
 
     public UUID getId_avaliacao_chat() {
@@ -48,11 +50,11 @@ public class AvaliacaoChatModel implements Serializable {
         this.avaliacao = avaliacao;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
 

@@ -13,5 +13,6 @@ import java.util.UUID;
 @Repository
 public interface CardapioRepository extends JpaRepository<CardapioModel, UUID> {
     List<CardapioModel> findByRestauranteModel(RestauranteModel restauranteModel);
-    Optional<CardapioModel> findByRestauranteModelAndData(RestauranteModel restauranteModel, LocalDate data);
+    Optional<CardapioModel> findByRestauranteModelAndData(RestauranteModel restauranteModel, String data);
+
 }

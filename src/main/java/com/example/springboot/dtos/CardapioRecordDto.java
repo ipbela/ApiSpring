@@ -9,5 +9,5 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 //inicializa todos os argumentos que serão salvos na base de dados
-public record CardapioRecordDto(@NotNull @JsonFormat(pattern = "dd/MM/yyyy") LocalDate data, @NotBlank String prato_principal, @NotBlank String guarnicao, @NotBlank String salada, @NotBlank String sobremesa, @NotNull UUID fk_restaurante) {
+public record CardapioRecordDto(@NotNull String data, String prato_principal, String guarnicao, String salada, String sobremesa, @NotNull UUID fk_restaurante) {
 }

@@ -19,7 +19,7 @@ public class CardapioModel implements Serializable {
     private String guarnicao;
     private String sobremesa;
     private String salada;
-    private LocalDate data;
+    private String data;
 
     //colocar chave estrangeira id restaurante
     @ManyToOne(cascade = CascadeType.ALL)
@@ -66,11 +66,11 @@ public class CardapioModel implements Serializable {
         this.salada = salada;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
 
