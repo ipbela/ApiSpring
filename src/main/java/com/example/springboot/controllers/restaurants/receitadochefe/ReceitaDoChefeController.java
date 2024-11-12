@@ -6,6 +6,9 @@ import com.example.springboot.models.CardapioModel;
 import com.example.springboot.models.RestauranteModel;
 import com.example.springboot.repositories.CardapioRepository;
 import com.example.springboot.repositories.RestauranteRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +34,24 @@ public class ReceitaDoChefeController {
     @Autowired
     RestauranteRepository restauranteRepository;
 
-    // Método POST que salva um novo cardápio
+    @Operation(description = "Cadastra um novo cardápio para o restaurante Receita do Chefe")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Cardápio cadastrado com sucesso!"),
+            @ApiResponse(responseCode = "409", description = "Já existe um cardápio cadastrado para essa data."),
+            @ApiResponse(responseCode = "400", description = "Não foi possível cadastrar o cardápio no momento, tente novamente mais tarde!")
+    })
     @PostMapping("/cardapios")
     public ResponseEntity<Object> saveMenu(@RequestBody @Valid CardapioRecordDto cardapioRecordDto) {
         return saveOrUpdateMenu(cardapioRecordDto, null);
     }
 
-    // Método PUT para atualizar um cardápio específico
+    @Operation(description = "Atualiza um cardápio para o restaurante Receita do Chefe")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cardápio atualizado com sucesso!"),
+            @ApiResponse(responseCode = "409", description = "Já existe um cardápio cadastrado para essa data."),
+            @ApiResponse(responseCode = "404", description = "Não foi possível localizar o cardápio, verifique se o id está correto."),
+            @ApiResponse(responseCode = "400", description = "Não foi possível atualizar o cardápio no momento, tente novamente mais tarde!")
+    })
     @PutMapping("/cardapios/{id_cardapio}")
     public ResponseEntity<Object> updateMenu(@PathVariable(value = "id_cardapio") UUID id_cardapio,
                                              @RequestBody @Valid CardapioRecordDto cardapioRecordDto) {
@@ -94,7 +108,11 @@ public class ReceitaDoChefeController {
                 (cardapioModel.getSobremesa() != null && !cardapioModel.getSobremesa().isEmpty());
     }
 
-    // Método GET para buscar todos os cardápios do restaurante "Receita do Chefe" dentro da semana atual
+    @Operation(description = "Busca os cardápios do restaurante Receita do Chefe")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna os cardápios encontrados."),
+            @ApiResponse(responseCode = "400", description = "Não foi possível buscar os cardápios, tente novamente mais tarde!")
+    })
     @GetMapping("/cardapios")
     public ResponseEntity<Object> getAllMenusThisWeek() {
         // pega o restaurante especifico
@@ -149,7 +167,12 @@ public class ReceitaDoChefeController {
         }
     }
 
-    // Método GET para buscar um cardápio específico pelo ID
+    @Operation(description = "Busca um cardápio do restaurante Receita do Chefe pelo id fornecido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna o cardápio encontrado."),
+            @ApiResponse(responseCode = "404", description = "Não foi possível localizar o cardápio, verifique se o id está correto."),
+            @ApiResponse(responseCode = "400", description = "Não foi possível encontrar o cardápio no momento, tente novamente mais tarde!")
+    })
     @GetMapping("/cardapios/{id_cardapio}")
     public ResponseEntity<Object> getIndividualMenu(@PathVariable(value = "id_cardapio") UUID id_cardapio) {
         Optional<CardapioModel> menu_ = cardapioRepository.findById(id_cardapio);

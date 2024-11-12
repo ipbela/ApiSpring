@@ -320,11 +320,11 @@ public class ChatbotServices {
 
     // Método que manda uma mensagem e redireciona para a página do gráfico de movimentação
     private MessageModel showMoveforHours(){
-        return new MessageModel("Toque no botão abaixo para conferir o gráfico de movimentação por horário:", "bot", Arrays.asList("Voltar para o início", "Encerrar o chat"));
+        return new MessageModel("Toque no botão abaixo para conferir o gráfico de movimentação por horário:", "bot", Arrays.asList("Gráfico de Movimentação", "Voltar para o início", "Encerrar o chat"));
     }
 
     // Método que busca o horário de funcionamento do restaurante
-    private MessageModel showOperatingHours() {
+    private MessageModel showOperatingHours() { 
         //cria uma variavel para armazenar os dados encontrados no banco
         InfoRestauranteModel infos = infoRestauranteRepository.findInfos();
 
@@ -410,6 +410,7 @@ public class ChatbotServices {
         return new MessageModel("O chatbot está aqui para facilitar sua vida, juntando todas as informações importantes sobre o restaurante da Bosch em um só lugar.", "bot", Arrays.asList("Voltar para o início", "Encerrar o chat"));
     }
 
+    // Método que finaliza o chatbot e mostra a enquete para o usuário avaliar a experiência
     private MessageModel finishChat(){
         return new MessageModel("Avalie a sua experiência com o nosso chatbot: ", "bot", Arrays.asList("Ótimo", "Ruim", "Voltar para o início"));
     }
